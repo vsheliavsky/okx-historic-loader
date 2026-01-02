@@ -1,9 +1,9 @@
-from collections.abc import Sequence
+from collections.abc import Iterable
 from logging import getLogger
 
 from file_storage import StorageReader, StorageRouter
 from okx_trade_fetcher.okx_trade_fetcher import OKXTradeFetcher
-from utilities.custom_types import InstrumentId
+from utilities.custom_types import InstrumentId, TradeId, _Timestamp
 
 logger = getLogger(__name__)
 
@@ -22,6 +22,8 @@ class HistoricalBackupService:
     def _run_backup_single_instrument(
         self,
         instrument_id: str,
+        after: TradeId | _Timestamp | None = None,
+        before: TradeId | None = None,
     ) -> None:
         logger.info(f"Starting backup for instrument {instrument_id}")
 
@@ -36,6 +38,6 @@ class HistoricalBackupService:
 
         logger.info(f"Finished backup for instrument {instrument_id}")
 
-    def run_backup(self, instrument_ids: Sequence[InstrumentId]) -> None:
+    def run_backup(self, instrument_ids: Iterable[InstrumentId]) -> None:
         for instrument_id in instrument_ids:
             self._run_backup_single_instrument(instrument_id=instrument_id)

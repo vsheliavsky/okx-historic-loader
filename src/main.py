@@ -2,6 +2,7 @@ from file_storage import LocalStorageReader, LocalStorageWriter, StorageRouter
 from historical_backup_service.historical_backup_service import HistoricalBackupService
 from okx_trade_fetcher.okx_trade_fetcher import OKXTradeFetcher
 from utilities.helpers import load_defaults, setup_logging
+from utilities.input_param_parser import parse_input_args
 
 
 def main() -> None:
@@ -12,6 +13,7 @@ def main() -> None:
     logger.info("Setting up...")
 
     defaults = load_defaults()
+    input_args = parse_input_args(defaults=defaults)
 
     file_storage_reader = LocalStorageReader(
         base_dir=defaults["file_storage"]["base_local_path"],
@@ -32,7 +34,7 @@ def main() -> None:
         storage_reader=file_storage_reader,
     )
 
-    instrument_ids = defaults["api_params"]["instrument_ids"]
+    instrument_ids = set(input_args.instrument_ids)
     logger.info(f"Running for instruments: {instrument_ids}")
 
     ###############

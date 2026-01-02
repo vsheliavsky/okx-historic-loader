@@ -1,3 +1,5 @@
+from collections.abc import Iterable
+from dataclasses import dataclass
 from typing import Any, NotRequired, TypedDict
 
 type InstrumentId = str
@@ -11,3 +13,12 @@ class HistoricalTradeFetchParams(TypedDict):
     instId: InstrumentId
     after: NotRequired[TradeId | _Timestamp]
     before: NotRequired[TradeId]
+
+
+@dataclass
+class CLIArgs:
+    """Structured container for parsed arguments."""
+
+    instrument_ids: Iterable[InstrumentId]
+    after: str | None
+    before: str | None
