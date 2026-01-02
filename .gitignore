@@ -1,0 +1,58 @@
+# --- uv Specifics ---
+# uv creates a .venv directory by default in the project root
+.venv/
+# If you use a custom target directory for environments
+venv/
+.env/
+
+# --- Python General ---
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# --- Environment & Secrets ---
+# Never commit your actual secrets
+.env
+.venv
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+
+# --- Static Analysis & Testing ---
+.mypy_cache/
+.pyre_cache/
+.ruff_cache/
+.pytest_cache/
+.cache/
+nosetests.xml
+coverage.xml
+*.cover
+*.py,cover
+.hypothesis/
+
+# --- IDEs & OS ---
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
