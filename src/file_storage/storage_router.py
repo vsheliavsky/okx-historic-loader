@@ -4,8 +4,10 @@ from datetime import date, datetime
 from logging import getLogger
 
 import pyarrow as pa
-from storage_writers.storage_writer_protocol import StorageWriter
+
 from utilities.custom_types import Trade
+
+from .storage_writers.storage_writer_protocol import StorageWriter
 
 logger = getLogger(__name__)
 

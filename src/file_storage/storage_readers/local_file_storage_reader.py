@@ -6,7 +6,6 @@ import pyarrow.parquet as pq
 
 from utilities.custom_types import InstrumentId, TradeId
 
-
 logger = getLogger(__name__)
 
 
@@ -67,19 +66,19 @@ class LocalStorageReader:
                 logger.info(f"No row groups found in file {file_path}")
                 return None
 
-            #  Read only the necessary columns into an Arrow Table 
-            # -> find the max timestamp 
+            #  Read only the necessary columns into an Arrow Table
+            # -> find the max timestamp
             # -> find the index of that timestamp
             table = pf.read_row_group(last_rg_idx, columns=["ts", "tradeId"])
             max_ts = pc.max(table.column("ts"))
             idx = pc.index(table.column("ts"), max_ts)
-            
-            if idx.as_py() == -1: # Not found
+
+            if idx.as_py() == -1:  # Not found
                 logger.info(f"No trades found in file {file_path}")
                 return None
 
             latest_id_scalar = table.column("tradeId")[idx.as_py()]
-            
+
             trade_id = str(latest_id_scalar)
             logger.info(
                 f"Latest tradeId for instrument {instrument_id} "

@@ -3,7 +3,13 @@ from logging import getLogger
 
 from okx.MarketData import MarketAPI
 
-from utilities.custom_types import HistoricalTradeFetchParams, TradeId, _Timestamp, InstrumentId, Trade
+from utilities.custom_types import (
+    HistoricalTradeFetchParams,
+    InstrumentId,
+    Trade,
+    TradeId,
+    _Timestamp,
+)
 
 logger = getLogger(__name__)
 
@@ -17,18 +23,21 @@ class OKXTradeFetcher:
         self,
         instrument_id: InstrumentId,
         after: TradeId | _Timestamp | None = None,
-        before: TradeId | None = None
-        ) -> Generator[Trade, None, None]:
+        before: TradeId | None = None,
+    ) -> Generator[Trade, None, None]:
         """
         Paginates through OKX historical trades and yields them page by page.
         """
         while True:
-            # OKX 'after' parameter is the tradeId to fetch data older than, while before is newer than
+            # OKX 'after' parameter is the tradeId to fetch data older than,
+            # while before is newer than
             logger.info(
                 f"Fetching trades for {instrument_id} after {after} before {before}"
             )
 
-            params: HistoricalTradeFetchParams = {"instId": instrument_id,}
+            params: HistoricalTradeFetchParams = {
+                "instId": instrument_id,
+            }
             if after is not None:
                 params["after"] = after
             if before is not None:

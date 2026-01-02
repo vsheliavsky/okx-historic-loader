@@ -1,9 +1,9 @@
 from collections.abc import Sequence
 from logging import getLogger
 
-from file_storage import StorageRouter, StorageReader
+from file_storage import StorageReader, StorageRouter
 from okx_trade_fetcher.okx_trade_fetcher import OKXTradeFetcher
-from utilities.custom_types import InstrumentId, HistoricalTradeFetchParams
+from utilities.custom_types import InstrumentId
 
 logger = getLogger(__name__)
 
@@ -25,8 +25,12 @@ class HistoricalBackupService:
     ) -> None:
         logger.info(f"Starting backup for instrument {instrument_id}")
 
-        latest_trade_id = self.storage_reader.get_latest_trade_id(instrument_id=instrument_id)
-        trades = self.okx_trade_fetcher.yield_historical_trades(instrument_id=instrument_id, after=latest_trade_id)  # TODO: fix before/after
+        latest_trade_id = self.storage_reader.get_latest_trade_id(
+            instrument_id=instrument_id
+        )
+        trades = self.okx_trade_fetcher.yield_historical_trades(
+            instrument_id=instrument_id, after=latest_trade_id
+        )  # TODO: fix before/after
 
         self.storage_router.process_trades(trades=trades)
 

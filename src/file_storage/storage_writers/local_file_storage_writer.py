@@ -10,7 +10,7 @@ logger = getLogger(__name__)
 
 class LocalStorageWriter:
     def __init__(self, base_dir: str):
-        self.base_dir = base_dir
+        self.base_dir = os.path.expanduser(base_dir)
         self.writers: dict[str, pq.ParquetWriter] = {}
 
     def write(self, table: pa.Table, file_name: str):
